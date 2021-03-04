@@ -100,7 +100,7 @@ export function Evento(props: EventoProps) {
                 <img className="w-4 h-4" src="/images/edit.png" alt="" />
             </button>
             <p className="col-span-2 text-xl mt-4 sm:text-2xl text-center">{props.titulo}</p>
-            <p className="mt-10 sm:mt-2 col-span-2 row-span-2 text-center  text-gray-700 overflow-auto">
+            <p className="mt-10 sm:mt-6 col-span-2 row-span-2 text-center  text-gray-700 overflow-auto">
                 {props.descricao}
             </p>
             {props.data == dataHoje && (
