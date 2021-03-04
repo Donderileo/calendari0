@@ -3,23 +3,25 @@ import { useSession } from 'next-auth/client'
 
 
 
+interface LoginContextData {
+    session:any;
+    loading: boolean;
+}
+
+export const LoginContext = createContext({} as LoginContextData);
+
 interface LoginProviderProps {
-    [x: string]: any;
     children: ReactNode;
 }
 
-export const LoginContext = createContext({} as LoginProviderProps);
 
-interface LoginContextData {
-    session: Object;
-}
 
-export function LoginProvider({ children }: LoginProviderProps) {
-    const [session, loading] = useSession()
+export function LoginProvider({ children, ...rest }: LoginProviderProps) {
+    const [session, loading] = useSession();
 
     return (
-        <LoginContext.Provider value={session}>
+    <LoginContext.Provider value={{session,loading}}>
             {children}
-        </LoginContext.Provider>
-    )
+    </LoginContext.Provider>
+    );
 }

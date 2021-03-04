@@ -43,14 +43,13 @@ export default async (
 
         if (!convidados) {
             return res.status(400).json({ message: "Você deve estar logado para acessar essa página" });
-
         }
 
         const { db } = await connectToDatabase();
         const response = await db.collection('eventos').find({ convidados }).toArray();
 
         if (response.length == 0) {
-            res.status(400).json({ message: "Participante sem eventos cadastrados" });
+            return res.status(400).json({ message: "Participante sem eventos cadastrados" });
         }
         else {
             return res.status(200).json(response);

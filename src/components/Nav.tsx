@@ -5,15 +5,21 @@ import { LoginContext } from '../contexts/LoginContext';
 
 
 export function Nav() {
-    const session = useContext(LoginContext);
+    const {session, loading} = useContext(LoginContext);
+
+    function replaceToHome(){
+        window.location.replace('/');
+    }
 
     return (
         <nav>
             <ul className="sm:flex sm:justify-between items-center px-8 py-3 sm:py-6  bg-purple-200">
                 <li className="justify-center flex">
-                    <Link href="/">
+                    <button className="focus:outline-none" onClick={() => {
+                        window.location.replace('/');
+                    }}>
                         <a className=" text-blue-900 no-underline text-2xl ">Meus Eventos</a>
-                    </Link>
+                    </button>
                 </li>
                 <ul className="flex justify-between items-center mt-5 sm:mt-1 sm:space-x-5 sm:space-x-10">
                     <li>

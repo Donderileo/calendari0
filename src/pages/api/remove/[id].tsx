@@ -25,24 +25,23 @@ export default async (
     const id = req.query.id as string;
     if (req.method == 'DELETE') {
         if (!id) {
-            res.status(400).json({ message: 'Missing event ID on request body' });
-            return;
+            return res.status(400).json({ message: 'Missing event ID on request body' });
+            
         }
 
         let _id: ObjectID;
         try {
             _id = new ObjectID(id);
         } catch {
-            res.status(400).json({ message: 'Wrong objectID' });
-            return;
+            return res.status(400).json({ message: 'Wrong objectID' });
+            
         }
 
         const { db } = await connectToDatabase();
         const response = await db.collection('eventos').findOne(_id);
 
         if (!response) {
-            res.status(400).json({ message: `Event with ID ${_id} not found` });
-            return;
+            return res.status(400).json({ message: `Event with ID ${_id} not found` });
         }
 
         db.collection('eventos').deleteOne(response);
@@ -50,7 +49,7 @@ export default async (
 
     }
     else {
-        return res.status(400).json({ message: 'Método errado' })
+        return res.status(400).json({ message: 'Método errado' });
 
     }
 

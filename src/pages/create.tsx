@@ -10,13 +10,13 @@ import axios from 'axios';
 
 export default function Convites(props) {
 
-    const session = useContext(LoginContext);
+    const {session, loading} = useContext(LoginContext);
     const [titulo, setTitulo] = useState('');
     const [data, setData] = useState(dataAtualFormatada());
     const [horaInicio, setHoraInicio] = useState('00:00');
     const [horaFim, setHoraFim] = useState('23:59');
     const [descricao, setDescricao] = useState('');
-    const [convidados, setConvidados] = useState('')
+    const [convidados, setConvidados] = useState('');
 
     function dataAtualFormatada() {
         var data = new Date(),
@@ -45,13 +45,14 @@ export default function Convites(props) {
 
         try {
             const response = await axios.post(`/api/eventos`, NovoEvento);
+            if(response){
+                window.location.replace('/');
+            }
         } catch (err) {
             alert(err.response.data.error);
         }
-    }
 
-    function replaceToHome() {
-        window.location.replace('/');
+        
     }
 
     return (
@@ -81,7 +82,7 @@ export default function Convites(props) {
                                 <p className="text-center -mt-3 text-sm ">Separe os e-mails por vírgula</p>
 
                                 <input className="text-center" autoComplete="on" type="text" value={convidados} onChange={(e) => { setConvidados(e.target.value) }} placeholder="E-mail convidados" />
-                                <button className="bg-green-300 mt-5 rounded-xl p-2 px-7  self-center hover:bg-green-400 duration-200" type="submit" onClick={replaceToHome}>Criar!</button>
+                                <button className="bg-green-300 mt-5 rounded-xl p-2 px-7  self-center hover:bg-green-400 duration-200" type="submit">Criar!</button>
                             </form>
                         </div>
                     </div>

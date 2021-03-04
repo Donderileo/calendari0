@@ -11,9 +11,8 @@ import api from '../../utils/api'
 
 export default function Index({ eventos }) {
 
-  const session = useContext(LoginContext);
-  const { data, error } = useSWR(`/api/eventos/`, api);
-
+  const {session, loading} = useContext(LoginContext);
+  const { data, error, isValidating } = useSWR(`/api/eventos/`, api);
 
   return (
     <div>
@@ -30,12 +29,13 @@ export default function Index({ eventos }) {
               {data.data.map((evento, index) => (
 
                 <Evento key={evento._id}
-                  _id={evento._id}
+                  id={evento._id}
                   titulo={evento.titulo}
                   data={evento.data}
                   horaInicio={evento.horaInicio}
                   horaFim={evento.horaFim}
                   descricao={evento.descricao}
+                  convidados={evento.convidados}
                 />
               ))}
 
@@ -43,7 +43,7 @@ export default function Index({ eventos }) {
           </div>
         )
       }
-      {session && !data &&
+      {session && !data && !loading && !isValidating &&
         (
           <div className="bg-gray-100 p-14 h-screen flex flex-col relative">
             <p className="text-center text-2xl">Opa, parece que você não tem eventos ainda...</p>
@@ -56,15 +56,17 @@ export default function Index({ eventos }) {
           </div>
         )
       }
-      {
-        !session &&
-        (
-
+      {!session && !isValidating && (
           <div className="bg-gray-100 p-14 h-screen flex justify-center relative">
             <p className="text-center text-2xl">Faça login para ver seus eventos!</p>
           </div>
         )
       }
+      {isValidating &&(
+        <div className="bg-gray-100 h-screen ">
+      </div>
+
+      )}
 
 
     </div >

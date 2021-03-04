@@ -12,8 +12,8 @@ import { Convite } from '../components/Convite'
 
 export default function Index({ eventos }) {
 
-    const session = useContext(LoginContext);
-    const { data, error } = useSWR(`/api/convites/`, api);
+    const {session, loading} = useContext(LoginContext);
+    const { data, error, isValidating } = useSWR(`/api/convites/`, api);
 
 
     return (
@@ -21,7 +21,7 @@ export default function Index({ eventos }) {
             {session && data &&
                 (
                     <div className="bg-gray-100 min-h-screen">
-                        <p className="flex-1 p-6 text-2xl text-gray-900">Bem vindo aos seus convites{session.user.name}</p>
+                        <p className="flex-1 p-6 text-2xl text-gray-900">Bem vindo aos seus convites {session.user.name}</p>
                         <div className="
                             grid grid-cols-1 gap-y-10
                             sm:grid-cols-2 sm:gap-6 
@@ -44,7 +44,7 @@ export default function Index({ eventos }) {
                     </div>
                 )
             }
-            {session && !data &&
+            {session && !data && !loading && !isValidating &&
                 (
                     <div className="bg-gray-100 p-14 h-screen flex flex-col relative">
                         <p className="text-center text-2xl">Opa, parece que você não tem convites ainda :(</p>
@@ -57,15 +57,14 @@ export default function Index({ eventos }) {
                     </div>
                 )
             }
-            {
-                !session &&
-                (
-
-                    <div className="bg-gray-100 p-14 h-screen flex justify-center relative">
-                        <p className="text-center text-2xl">Faça login para ver seus convites!</p>
-                    </div>
-                )
-            }
+            {!session && !isValidating && (
+                <div className="bg-gray-100 p-14 h-screen flex justify-center relative">
+                    <p className="text-center text-2xl">Faça login para ver seus convites!</p>
+                </div>
+            )}
+            {isValidating && (
+                <div className="bg-gray-100 h-screen"></div>
+            )}
 
 
         </div >
