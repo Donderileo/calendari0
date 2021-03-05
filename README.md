@@ -49,9 +49,19 @@
 * Crie um arquivo .env.local na raiz do projeto.
 * Crie as seguintes variáveis de acordo com os valores do seu banco de dados e da sua aplicação Auth0.
 
-    ```
-    
-    ```
+```
+MONGODB_URI =  
+MONGODB_DB = 
+
+NEXTAUTH_URL = http://localhost:3000
+AUTH0_CLIENT_ID = 
+AUTH0_CLIENT_SECRET = 
+AUTH0_DOMAIN =   
+```
+
+#### MONGODB_URI está disponível em conexão com a aplicação no seu cluster.
+#### MONGODB_DB é o nome do database criado
+#### Variávies de auth estão disponíveis nas informações da aplicação.
 
 ## E por fim, só rodar!!
 
